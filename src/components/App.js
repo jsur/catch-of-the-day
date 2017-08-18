@@ -11,6 +11,7 @@ class App extends React.Component {
 
     this.addFish = this.addFish.bind(this);
     this.loadSamples = this.loadSamples.bind(this);
+    this.addToOrder = this.addToOrder.bind(this);
     this.state = {
       fishes: {},
       order: {}
@@ -33,6 +34,15 @@ class App extends React.Component {
     })
   }
 
+  addToOrder(key) {
+    // take a copy of state
+    const order = {...this.state.order};
+    //update or add new number of fish ordered
+    order[key] = order[key] + 1 || 1; // or 1 for new cases that dont exist yet
+    //update state
+    this.setState({ order });
+  }
+
   render() {
     return (
       <div className="catch-of-the-day">
@@ -42,11 +52,17 @@ class App extends React.Component {
             {
               Object
                 .keys(this.state.fishes)
-                .map(key => <Fish key={key} details={this.state.fishes[key]} />)
+                .map(key =>
+                  <Fish
+                    key={key} // React needs a unique key to work
+                    index={key} // this is for addToOrder onClick
+                    details={this.state.fishes[key]}
+                    addToOrder={this.addToOrder}
+                  />)
             }
           </ul>
         </div>
-        <Order/>
+        <Order fishes={this.state.fishes} order={this.state.order} />
         <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
       </div>
     )
