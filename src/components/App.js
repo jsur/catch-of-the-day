@@ -11,17 +11,18 @@ class App extends React.Component {
     super();
 
     this.addFish = this.addFish.bind(this);
-    this.removeFish = this.removeFish.bind(this);
-    this.loadSamples = this.loadSamples.bind(this);
+    // this.removeFish = this.removeFish.bind(this); PROPERTY INITIALIZER
+    // this.loadSamples = this.loadSamples.bind(this); PROPERTY INITIALIZER
     this.addToOrder = this.addToOrder.bind(this);
     this.removeFromOrder = this.removeFromOrder.bind(this);
-    this.updateFish = this.updateFish.bind(this);
+    // this.updateFish = this.updateFish.bind(this); PROPERTY INITIALIZER
 
-    this.state = {
-      fishes: {},
-      order: {}
-    };
   }
+
+  state = {
+    fishes: {},
+    order: {}
+  };
 
   componentWillMount() {
     // Runs before app is rendered
@@ -60,23 +61,23 @@ class App extends React.Component {
     this.setState({ fishes });
   }
 
-  updateFish(key, updatedFish) {
+  updateFish = (key, updatedFish) => {
     const fishes = {...this.state.fishes};
     fishes[key] = updatedFish;
     this.setState({fishes});
   }
 
-  removeFish(key) {
+  removeFish = (key) => {
     const fishes = {...this.state.fishes};
     fishes[key] = null; // set to null instead of delete because Firebase
     this.setState({ fishes });
-  }
+  };
 
-  loadSamples() {
+  loadSamples = () => {
     this.setState({
       fishes: sampleFishes
     })
-  }
+  };
 
   addToOrder(key) {
     // take a copy of state
